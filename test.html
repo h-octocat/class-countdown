@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Class Countdown</title>
+    <style>
+      span {
+        font-size: 20px;
+        font-family: sans-serif;
+      }
+      div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <span class="time">0 hours 0 minutes 0 seconds</span>
+      <br />
+      <span>until classes are revealed</span>
+    </div>
+    <script>
+      const timeElement = document.getElementsByClassName("time")[0];
+      var loaded = false;
+      const classes = new Date("Sep 4, 2024 15:00:00");
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+      async function getFormatted() {
+        var now = new Date();
+        var msUntilClasses = classes.getTime() - now.getTime();
+        var secondsUntilClasses = Math.floor((msUntilClasses / 1000) % 60);
+        var minutesUntilClasses = Math.floor((msUntilClasses / 1000 / 60) % 60);
+        var hoursUntilClasses = Math.floor(msUntilClasses / 1000 / 60 / 60);
+        var formatted = `${hoursUntilClasses} hours, ${minutesUntilClasses} minutes, ${secondsUntilClasses} seconds`;
+        await sleep(1000);
+        return formatted;
+      }
+      async function main() {
+        while (true) {
+          console.log("in the loop");
+          timeElement.innerHTML = await getFormatted();
+        }
+      }
+
+      addEventListener("DOMContentLoaded", (event) => {
+        main();
+      });
+    </script>
+  </body>
+</html>
