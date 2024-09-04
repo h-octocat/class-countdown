@@ -34,6 +34,10 @@
       async function getFormatted() {
         var now = new Date();
         var msUntilClasses = classes.getTime() - now.getTime();
+        if (msUntilClasses <= 0) {
+          await sleep(1000);
+          return "CLASSES REVEALED!!!";
+        }
         var secondsUntilClasses = Math.floor((msUntilClasses / 1000) % 60);
         var minutesUntilClasses = Math.floor((msUntilClasses / 1000 / 60) % 60);
         var hoursUntilClasses = Math.floor(msUntilClasses / 1000 / 60 / 60);
